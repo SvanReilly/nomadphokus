@@ -128,8 +128,6 @@ function verificarExistencia(url) {
     });
 }
 
-// --- LÓGICA DEL VISOR REESTRUCTURADA ---
-
 function crearEstructuraLightbox() {
     const lightbox = document.createElement('div');
     lightbox.id = 'lightbox-visor';
@@ -137,9 +135,7 @@ function crearEstructuraLightbox() {
     lightbox.innerHTML = `
         <div class="lightbox-content">
             <button class="lightbox-btn close-btn"><i class="fas fa-times"></i></button>
-            
             <img class="lightbox-img" src="" alt="Gallery Image" draggable="false">
-            
             <div class="lightbox-controls-bottom">
                 <div class="controls-row">
                     <button class="lightbox-btn inline-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
@@ -191,7 +187,7 @@ function crearEstructuraLightbox() {
             const opacity = 1 - Math.abs(diffY) / 600;
             const scale = 1 - Math.abs(diffY) / 2000;
             lbImg.style.transform = `translate(${diffX * 0.3}px, ${diffY}px) scale(${scale})`;
-            lightbox.style.backgroundColor = `rgba(0, 0, 0, ${0.7 * opacity})`;
+            lightbox.style.backgroundColor = `rgba(0, 0, 0, ${0.85 * opacity})`;
         } else {
             lbImg.style.transform = `translateX(${diffX}px)`;
         }
@@ -200,11 +196,12 @@ function crearEstructuraLightbox() {
     const endAction = (e) => {
         if (!isDragging) return;
         isDragging = false;
-        const endX = e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX;
-        const endY = e.type.includes('touch') ? e.changedTouches[0].clientY : e.clientY;
+        const endX = (e.type === 'mouseup') ? e.clientX : (e.changedTouches ? e.changedTouches[0].clientX : startX);
+        const endY = (e.type === 'mouseup') ? e.clientY : (e.changedTouches ? e.changedTouches[0].clientY : startY);
+        
         const diffX = endX - startX;
         const diffY = endY - startY;
-        const threshold = 100;
+        const threshold = 80;
 
         lbImg.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease';
 
@@ -217,7 +214,7 @@ function crearEstructuraLightbox() {
             diffX > 0 ? prevImg() : nextImg();
         } else {
             lbImg.style.transform = 'translate(0, 0) scale(1)';
-            lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
         }
     };
 
@@ -236,6 +233,9 @@ function updateLightbox(direction = 'none') {
     const lightbox = document.getElementById('lightbox-visor');
     if (!lbImg || galleryImages.length === 0) return;
 
+    // LIMPIEZA CRÍTICA: Reseteamos cualquier transform residual del gesto táctil
+    lbImg.style.transform = 'none';
+
     if (direction === 'none') {
         lbImg.style.transition = 'none';
         lbImg.src = galleryImages[currentIndex];
@@ -245,26 +245,20 @@ function updateLightbox(direction = 'none') {
         const outClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
         const inClass = direction === 'next' ? 'slide-in-right' : 'slide-in-left';
 
-        // 1. Iniciar barrido de salida
         lbImg.classList.add(outClass);
 
-        // 2. Esperar a que la imagen salga antes de cambiar el src
         setTimeout(() => {
             lbImg.classList.remove(outClass);
-            lbImg.style.transition = 'none'; // Quitar transición para posicionar la nueva imagen
+            lbImg.style.transition = 'none';
+            lbImg.style.transform = 'none'; // Re-aseguramos limpieza antes de la entrada
             lbImg.src = galleryImages[currentIndex];
             
-            // 3. Posicionar la nueva imagen (invisible) para la entrada
             lbImg.classList.add(inClass);
-            
-            // Forzar reflow para que el navegador registre la nueva posición
             void lbImg.offsetWidth;
             
-            // 4. Ejecutar barrido de entrada
-            lbImg.style.transition = 'transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease';
+            lbImg.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease';
             lbImg.classList.remove(inClass);
-            
-        }, 450); // Tiempo coordinado con el CSS
+        }, 450);
     }
     
     lbCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(galleryImages.length).padStart(2, '0')}`;

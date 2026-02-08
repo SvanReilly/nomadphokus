@@ -37,10 +37,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px; /* Reducido para evitar empujes innecesarios */
+    padding: 20px;
     width: 100%;
     box-sizing: border-box;
-    /* Eliminamos los márgenes auto que causaban el vacío excesivo */
 }
 
 .welcome-container h1 {
@@ -49,13 +48,13 @@ body {
     letter-spacing: 8px;
     text-transform: uppercase;
     margin-top: 0;
-    margin-bottom: 2.5rem; /* Espacio moderado bajo el logo */
+    margin-bottom: 2.5rem;
 }
 
 .button-group {
     display: flex;
     gap: 20px;
-    margin-bottom: 1.5rem; /* Reducido para acercar los atajos */
+    margin-bottom: 1.5rem;
 }
 
 .btn {
@@ -76,7 +75,7 @@ body {
 
 .info-shortcuts { 
     margin-top: 0; 
-    margin-bottom: 1rem; /* Espacio mínimo antes del contenido desplegable */
+    margin-bottom: 1rem;
 }
 
 .info-shortcuts a {
@@ -94,7 +93,7 @@ body {
    CONTACTO (PEGADO A LOS BOTONES)
    ========================================= */
 .content-section {
-    padding: 0 20px 20px 20px; /* Eliminamos padding superior para que suba */
+    padding: 0 20px 20px 20px;
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
@@ -109,7 +108,7 @@ body {
 .contact-links {
     display: flex;
     justify-content: center;
-    gap: 60px; /* Un poco más compacto */
+    gap: 60px;
     margin-top: 1.5rem;
     flex-wrap: wrap; 
 }
@@ -243,7 +242,7 @@ body {
 .grid-item-link:hover img { filter: grayscale(0%); }
 
 /* =========================================
-   IDIOMA (CORREGIDO Y BLINDADO)
+   IDIOMA
    ========================================= */
 .language-picker { 
     position: fixed; 
@@ -266,19 +265,19 @@ body {
 }
 
 /* =========================================
-   VISOR DE IMÁGENES
+   VISOR DE IMÁGENES (CON FIXES TÁCTILES)
    ========================================= */
 .lightbox {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.7); 
+    background: rgba(0, 0, 0, 0.85); /* Un poco más oscuro para contrastar */
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 10000;
     opacity: 0;
-    transition: opacity 0.5s ease, background-color 0.3s ease;
+    transition: opacity 0.5s ease;
     backdrop-filter: blur(15px); 
     -webkit-backdrop-filter: blur(15px);
     overflow: hidden;
@@ -299,7 +298,7 @@ body {
 }
 
 .lightbox-img {
-    max-width: 100%;
+    max-width: 95%;
     max-height: calc(100vh - 180px); 
     object-fit: contain;
     display: block;
@@ -307,22 +306,17 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.15); 
     box-shadow: 0 25px 60px rgba(0,0,0,0.6);
     flex-grow: 0; 
-    transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease;
+    /* He reducido el tiempo de transición para que el "swipe" se sienta más reactivo */
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease;
     user-select: none;
     -webkit-user-drag: none;
+    /* Forzamos el reset de posición central */
+    transform: translateX(0); 
 }
 
-/* Animaciones de barrido */
-.slide-out-left { 
-    transform: translateX(-100%) scale(0.9) !important; 
-    opacity: 0 !important; 
-    transition: transform 0.6s ease, opacity 0.6s ease !important;
-}
-.slide-out-right { 
-    transform: translateX(100%) scale(0.9) !important; 
-    opacity: 0 !important; 
-    transition: transform 0.6s ease, opacity 0.6s ease !important;
-}
+/* Animaciones de barrido mejoradas */
+.slide-out-left { transform: translateX(-100%) scale(0.9) !important; opacity: 0 !important; }
+.slide-out-right { transform: translateX(100%) scale(0.9) !important; opacity: 0 !important; }
 .slide-in-right { transform: translateX(100%) scale(0.9) !important; opacity: 0 !important; }
 .slide-in-left { transform: translateX(-100%) scale(0.9) !important; opacity: 0 !important; }
 
@@ -358,10 +352,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.play-pause-btn:hover {
-    background: #fff;
-    color: #000;
-}
+.play-pause-btn:hover { background: #fff; color: #000; }
 
 .image-counter {
     color: rgba(255, 255, 255, 0.4);
@@ -379,19 +370,23 @@ body {
     z-index: 10001;
 }
 
-.lightbox-btn.inline-btn {
-    font-size: 1.2rem;
-    padding: 10px;
-}
-
-.lightbox-btn:hover { color: #fff; }
-
 .close-btn { 
     position: absolute;
     top: 30px; 
     right: 30px; 
     font-size: 1.5rem; 
+    z-index: 10010; /* Prioridad máxima */
+    background: rgba(0,0,0,0.3); /* Fondo para que destaque sobre la foto */
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    transition: background 0.3s ease;
 }
+.close-btn:hover { background: rgba(255,255,255,0.1); }
 
 /* =========================================
    RESPONSIVE
@@ -400,32 +395,13 @@ body {
     .welcome-container h1 {
         font-size: 2.2rem;
         margin-bottom: 1.5rem;
-        letter-spacing: 4px;
     }
     
-    .welcome-body {
-        justify-content: center;
-        padding-top: 0;
-    }
-
-    .button-group {
-        gap: 12px;
-        margin-bottom: 1.2rem;
-    }
-
-    .info-shortcuts {
-        margin-bottom: 0.5rem;
-    }
-
-    .content-section {
-        padding-top: 0;
-    }
-
-    .contact-links {
-        gap: 30px;
-        margin-top: 1rem;
-    }
-
+    .welcome-body { justify-content: center; padding-top: 0; }
+    .button-group { gap: 12px; margin-bottom: 1.2rem; }
+    .info-shortcuts { margin-bottom: 0.5rem; }
+    .content-section { padding-top: 0; }
+    .contact-links { gap: 30px; margin-top: 1rem; }
     .back-link { left: 20px; top: 20px; }
     
     .grid-gallery { 
@@ -436,13 +412,24 @@ body {
     }
     
     .lightbox-content { padding: 20px; }
+    .lightbox-img { max-height: calc(100vh - 220px); }
+    .close-btn { top: 20px; right: 20px; transform: scale(0.9); }
+}
+
+/* FIX PARA MÓVIL EN HORIZONTAL (LANDSCAPE) */
+@media (max-height: 500px) and (orientation: landscape) {
+    .lightbox-content { padding: 10px; }
     .lightbox-img { 
-        max-height: calc(100vh - 220px); 
+        max-height: 90vh; /* Máximo aprovechamiento del alto */
+        width: auto; 
     }
-    
-    .controls-row { gap: 30px; }
-    .lightbox-btn.inline-btn { font-size: 1.5rem; }
-    
-    .close-btn { top: 20px; right: 20px; }
-    .lightbox-controls-bottom { padding: 10px 0 30px 0; }
+    .lightbox-controls-bottom {
+        position: absolute;
+        bottom: 10px;
+        padding: 5px;
+        background: rgba(0,0,0,0.4);
+        border-radius: 30px;
+        width: auto;
+    }
+    .close-btn { top: 10px; right: 10px; transform: scale(0.8); }
 }
