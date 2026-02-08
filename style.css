@@ -14,14 +14,13 @@ body {
 
 .hidden { display: none !important; }
 
-/* Fondo radial unificado */
 .welcome-body, .portfolio-body {
     background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
     background-attachment: fixed;
 }
 
 /* =========================================
-   ESTRUCTURA INDEX (CENTRADO VERTICAL)
+   ESTRUCTURA INDEX
    ========================================= */
 .welcome-body {
     display: flex;
@@ -86,12 +85,8 @@ body {
 .info-shortcuts a:hover { color: #fff; }
 
 /* =========================================
-   SECCIONES DINÁMICAS
+   CONTACTO (ESTILO PIRÁMIDE)
    ========================================= */
-#content-display {
-    width: 100%;
-}
-
 .content-section {
     padding: 20px 20px 40px;
     max-width: 800px;
@@ -105,14 +100,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.content-section h2 {
-    font-weight: 200;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 2rem;
-}
-
-/* CONTACTO ESTILO PIRÁMIDE */
 .contact-links {
     display: flex;
     justify-content: center;
@@ -149,7 +136,6 @@ body {
     transition: all 0.3s ease;
     position: relative;
 }
-
 .insta-link i { margin-right: 8px; }
 .insta-link:hover { color: #888; transform: translateY(-2px); }
 
@@ -172,12 +158,8 @@ body {
 .tooltip.show { opacity: 1; visibility: visible; top: -45px; }
 
 /* =========================================
-   PORTFOLIO HEADER & VOLVER
+   PORTFOLIO HEADER
    ========================================= */
-.portfolio-body {
-    display: block; 
-}
-
 .portfolio-header {
     padding: 80px 20px 40px;
     text-align: center;
@@ -198,25 +180,10 @@ body {
     border: 1px solid #333;
     background: #1a1a1a;
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-sizing: border-box;
     z-index: 10;
 }
-
-.back-link i {
-    font-size: 1.1rem;
-    transition: transform 0.3s ease;
-}
-
-.back-link:hover {
-    color: #fff;
-    border-color: #666;
-    background: #222;
-    transform: scale(1.1);
-}
-
-.back-link:hover i {
-    transform: translateX(-2px);
-}
+.back-link i { font-size: 1.1rem; }
+.back-link:hover { color: #fff; border-color: #666; transform: scale(1.1); }
 
 #portfolio-title {
     font-size: 2.5rem;
@@ -224,16 +191,15 @@ body {
     letter-spacing: 6px;
     text-transform: uppercase;
     color: #fff;
-    margin: 0;
 }
 
 /* =========================================
-   GRID GALLERY (EFECTO ZOOM CENTRAL)
+   GRID GALLERY
    ========================================= */
 .grid-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 40px; /* Un poco más de aire entre fotos */
+    gap: 40px;
     padding: 0 40px 60px 40px;
     grid-auto-rows: 350px; 
 }
@@ -242,25 +208,14 @@ body {
     display: flex; 
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    box-sizing: border-box; 
-    padding: 10px;                
     background: #1a1a1a;         
     border: 1px solid #333;      
     box-shadow: 0 10px 25px rgba(0,0,0,0.8);
     position: relative;
-    z-index: 1;
     overflow: hidden;
-    align-self: center;
-
-    /* Transición premium */
-    transition: 
-        transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
-        border-color 0.5s ease,
-        background 0.5s ease,
-        box-shadow 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.4s ease;
+    z-index: 1;
+    cursor: pointer;
 }
 
 .grid-item-link img {
@@ -268,52 +223,28 @@ body {
     height: 100%;
     object-fit: cover; 
     filter: grayscale(40%);
-    display: block;
     opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 1s ease, transform 1s ease, filter 0.5s ease;
+    transition: opacity 0.8s ease, transform 0.8s ease, filter 0.4s ease;
 }
 
-.grid-item-link img.reveal { 
-    opacity: 1; 
-    transform: translateY(0); 
-}
+.grid-item-link img.reveal { opacity: 1; }
 
-/* EFECTO HOVER: SUPERPOSICIÓN Y ZOOM AGRESIVO */
 .grid-item-link:hover { 
-    /* Zoom aumentado para dar esa sensación de "venir hacia adelante" */
-    transform: scale(1.10); 
-    
-    height: auto; 
-    min-height: auto;
-    align-self: center;
-    
-    border-color: #fff; /* Borde más brillante en el zoom */
-    background: #111;            
-    padding: 5px; 
-    
-    /* Sombra mucho más profunda para despegarlo del grid */
-    box-shadow: 0 50px 100px rgba(0,0,0,0.95);
-    
-    /* Z-index muy alto para estar por encima de todo el grid */
-    z-index: 999;                 
-    overflow: visible;
+    transform: scale(1.05);
+    border-color: #fff;
+    z-index: 2;
 }
-
-.grid-item-link:hover img {
-    width: auto; 
-    height: auto;
-    max-width: 100%;
-    /* Ajuste para que no tape todo el viewport pero sea imponente */
-    max-height: 85vh; 
-    object-fit: contain;
-    filter: grayscale(0%);
-}
+.grid-item-link:hover img { filter: grayscale(0%); }
 
 /* =========================================
-   OTROS (LANG PICKER)
+   IDIOMA
    ========================================= */
-.language-picker { position: absolute; top: 20px; right: 20px; z-index: 100; }
+.language-picker { 
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+    z-index: 100; 
+}
 #lang-select {
     background: transparent;
     color: #666;
@@ -324,25 +255,144 @@ body {
 }
 
 /* =========================================
-   RESPONSIVE (MÓVIL & TABLET)
+   VISOR DE IMÁGENES (CINEMATOGRÁFICO & BLUR)
+   ========================================= */
+.lightbox {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.65); /* Fondo ligeramente más claro para apreciar el blur */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
+    overflow: hidden;
+}
+
+.lightbox.active { display: flex; opacity: 1; }
+
+.lightbox-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 75vh;
+    object-fit: contain;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    /* Transición suavizada (0.8s) para un efecto más lento */
+    transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease;
+}
+
+/* Animaciones de barrido corregidas: Siguiente (Next) sale por Izq, entra por Der */
+/* Siguiente: La foto actual se va a la izquierda */
+.slide-out-left { 
+    transform: translateX(-100%) scale(0.9) !important; 
+    opacity: 0 !important; 
+}
+
+/* Siguiente: La foto nueva espera en la derecha para entrar */
+.slide-in-right { 
+    transform: translateX(100%) scale(0.9) !important; 
+    opacity: 0 !important; 
+}
+
+/* Anterior: La foto actual se va a la derecha */
+.slide-out-right { 
+    transform: translateX(100%) scale(0.9) !important; 
+    opacity: 0 !important; 
+}
+
+/* Anterior: La foto nueva espera en la izquierda para entrar */
+.slide-in-left { 
+    transform: translateX(-100%) scale(0.9) !important; 
+    opacity: 0 !important; 
+}
+
+/* CONTROLES FIJOS INFERIORES */
+.lightbox-controls-bottom {
+    position: absolute;
+    bottom: 40px; 
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 10001;
+}
+
+.play-pause-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-pause-btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.image-counter {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.lightbox-btn {
+    position: absolute;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 10001;
+}
+.lightbox-btn:hover { color: #fff; }
+
+.prev-btn { left: 30px; }
+.next-btn { right: 30px; }
+.close-btn { top: 30px; right: 30px; font-size: 1.5rem; }
+
+/* =========================================
+   RESPONSIVE
    ========================================= */
 @media (max-width: 768px) {
     .back-link {
-        position: relative;
-        left: 0;
-        top: 0;
-        margin: 0 auto 20px;
+        position: absolute;
+        left: 20px;
+        top: 20px;
     }
     .grid-gallery { 
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+        grid-auto-rows: 220px;
         gap: 20px;
         padding: 0 20px 40px 20px;
-        grid-auto-rows: 220px;
     }
-    .grid-item-link { height: 100%; }
-    
-    /* En móvil suavizamos el zoom para no perder el contexto */
-    .grid-item-link:hover { 
-        transform: scale(1.15); 
-    }
+    .prev-btn { left: 15px; }
+    .next-btn { right: 15px; }
+    .close-btn { top: 20px; right: 20px; }
+    .lightbox-img { max-width: 95%; max-height: 60vh; }
 }
