@@ -1,6 +1,6 @@
 # 📸 Nomad Phokus - Guía de Gestión y Uso del Portfolio Fotográfico (en tanto que nivel de usuario final).
 
-¡Bienvenido al sistema de actualización automática de Portfolio Web - Nomad Phokus! No necesitas saber programar para que tus fotos aparezcan en la web. Este documento te explica cómo gestionar tu galería usando solo tu cuenta de **Cloudinary**.
+¡Bienvenido al sistema de Portfolio Web - Nomad Phokus! No necesitas saber programar para que tus fotos aparezcan en una web minimalista y sobria. Este documento te explica cómo gestionar tu galería usando solo tu cuenta de **Cloudinary**.
 
 ---
 
@@ -30,20 +30,22 @@ Renombra tus fotos antes de subirlas siguiendo este patrón:
 
 ## 🛠️ Preguntas Frecuentes (FAQ)
 
-#### Pero no entiendo, Svån,¿Entonces en qué formato debo subir las fotos?
-Puedes subirlas en **AVIF (recomendado), WEBP, JPG, JPEG o PNG**. En caso de subirlas en formato AVIF, exportar desde Lightroom con calidad al 70, y redimensionando con borde largo a 2000px a 72ppp.
+#### Pero no entiendo, Svån. ¿Entonces en qué formato debo subir las fotos?
+Te recomiendo subirlas a Cloudinary en **AVIF** por la relacion calidad eficiencia superior a los demás formatos, pero puedes subirlas también en otros formatos que por orden de prioridad son los siguientes: **AVIF > WEBP > JPG > JPEG > PNG**.
+
+En cuyo caso tomes mi recomendación, exporta desde Lightroom o similar en formato **AVIF** con **calidad 70** (con 60 incluso es suficiente), y con **[x] Redimensionar para encajar** con **borde largo a 2000px** con una resolución de **72 píxeles por pulgada**.
 
 #### ¿Tengo que tocar el código de GitHub?
 **No.** Una vez que subas la foto a Cloudinary con el nombre correcto (ej. `image-4`), la web la detectará y la publicará automáticamente en la posición de la celda correspondiente la próxima vez que alguien entre.
 
 #### ¿Hay un límite de fotos?
-El sistema está configurado para buscar hasta **100 imágenes**. 
+Sí, está configurado principalmente para buscar hasta **100 imágenes** y detenerse (Está de _súper_ sobra para un portfolio fotográfico en la mayoría de los casos). Igualmente es algo que puede modificarse rápidamente. 
 
 #### He subido una foto pero no aparece, ¿qué hago?
-1. Verifica que el nombre sea exactamente `image` seguido del número (sin espacios).
-2. Asegúrate de que no te has saltado ningún número (si tienes `image1` e `image3`, pero falta `image2`, el sistema se detendrá en la primera).
+1. Verifica que el nombre sea exactamente `image-número_de_la_foto` (sin espacios).
+2. Asegúrate de que no te has saltado ningún número (si tienes `image-1` e `image-3`, pero falta `image-2`, el sistema sólo mostrará la primera).
 3. Refresca la página de la web.
-4. A veces puede tardar un buen rato en actualizarse, dependiendo de factores que, de forma resumida, escapan al alcance del programa web, pero terminarán viéndose reflejados dichos cambios si has seguido el paso a paso.
+4. A veces puede tardar un buen rato en actualizarse dependiendo de factores que, de forma resumida, escapan al alcance del programa web, pero terminarán viéndose reflejados los cambios pertinentes si has seguido el paso a paso.
 
 #### Para cambiar la posición de las fotos que ya he subido, ¿qué tengo que hacer?
 1. Entra a [Cloudinary](https://cloudinary.com/) y dirígete a tu **Media Library** (Biblioteca de medios)
@@ -60,7 +62,7 @@ El sistema está configurado para buscar hasta **100 imágenes**.
     <img src="assets/cambiarfoto2.jpeg" alt="scr1" width="300">
 </p>
 
-4. Cambiar el id público al número que quieras cambiar, por ejemplo: cambiar la posición de la foto 75 por la de la foto 12, como no es posible dar el mismo Public ID a dos elementos tendrás que poner uno aleatorio para poder cambiar el otro al Public ID sustituido. Para ver los cambios simplemente borra la caché de tu navegador y al cabo de unos minutos se verán reflejados los cambios.
+4. Cambiar el Public ID al número que quieras cambiar, por ejemplo: cambiar la posición de la foto 75 por la de la foto 12, como no es posible dar el mismo Public ID a dos elementos tendrás que poner uno aleatorio para poder cambiar el otro al Public ID sustituido. Para ver los cambios simplemente borra la caché de tu navegador y al cabo de unos minutos se verán reflejados.
 
 <p align="center";>
     <img src="assets/cambiarfoto3.jpeg" alt="scr1" width="300">
@@ -70,7 +72,7 @@ El sistema está configurado para buscar hasta **100 imágenes**.
 ---
 
 ## 📬 Contacto Técnico
-Si el sistema deja de cargar fotos o quieres cambiar la ruta de las carpetas, contacta con el administrador del código (**Svån**) con tu editor de código de confianza a través de los distintos enlaces de contacto presentes en el perfil.
+Si el sistema deja de cargar fotos, quieres cambiar la ruta de las carpetas o simplemente buscas adaptar el portfolio a tu estilo, contacta con el administrador del código, (**Svån**), a través de los distintos enlaces de contacto presentes en el perfil.
 
 ---
 *Mantenlo simple. Enfoca tu pensamiento. Captura el momento.*
