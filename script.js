@@ -4,6 +4,7 @@
 
 const translations = {
     es: {
+        title: "Nomad Phokus | Grupo Fotográfico",
         welcome: "Nomad Phokus",
         svanBtn: "Svån Portfolio",
         phokusBtn: "PHOKUS Portfolio",
@@ -16,6 +17,7 @@ const translations = {
         mailLabel: "Email"
     },
     en: {
+        title: "Nomad Phokus | Photography Group",
         welcome: "Nomad Phokus",
         svanBtn: "Svån Portfolio",
         phokusBtn: "PHOKUS Portfolio",
@@ -74,7 +76,16 @@ function configurarIdioma() {
 async function inicializarGaleria(cloudUser, displayName) {
     const nameSpan = document.getElementById('user-name');
     const grid = document.getElementById('grid-fotografico');
-    if (nameSpan && displayName) nameSpan.innerText = displayName.toUpperCase();
+    
+    // --- INTEGRACIÓN DE TÍTULO DINÁMICO ---
+    if (displayName) {
+        // Formatea el nombre para que sea "Phokus" o "Svan" (Primera Mayúscula)
+        const formattedName = displayName.charAt(0).toUpperCase() + displayName.slice(1).toUpperCase();
+        document.title = `Portfolio | ${formattedName}`;
+        
+        // Mantiene el nombre en el HTML como PHOKUS/SVÅN (Todo Mayúsculas)
+        if (nameSpan) nameSpan.innerText = displayName.toUpperCase();
+    }
 
     let i = 1; 
     let buscando = true;
@@ -215,7 +226,6 @@ function crearEstructuraLightbox() {
             lbImg.style.transform = `translateX(${diffX > 0 ? '100%' : '-100%'})`;
             
             setTimeout(() => {
-                // Si diffX > 0 es "anterior", si diffX < 0 es "siguiente"
                 diffX > 0 ? prevImg() : nextImg();
             }, 400);
         } else {
@@ -257,17 +267,14 @@ function ejecutarCambioImagen(lbImg, lbCounter, direction) {
     tempImg.onload = () => {
         lbImg.style.transition = 'none';
         
-        // POSICIONAMIENTO INICIAL: La ponemos fuera de pantalla antes de mostrarla
         if (direction === 'next') lbImg.style.transform = 'translateX(100%)';
         else if (direction === 'prev') lbImg.style.transform = 'translateX(-100%)';
         else lbImg.style.transform = 'translateX(0)';
 
         lbImg.src = galleryImages[currentIndex];
 
-        // Forzar reflow para que el navegador registre la posición fuera de pantalla
         void lbImg.offsetWidth;
 
-        // ANIMACIÓN DE ENTRADA: Al centro con inercia cinemática
         lbImg.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease-out';
         lbImg.style.transform = 'translateX(0)';
         lbImg.style.opacity = '1';
