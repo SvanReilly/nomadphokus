@@ -128,7 +128,7 @@ function verificarExistencia(url) {
     });
 }
 
-// --- LÓGICA DEL VISOR (TRACKING & GESTOS) ---
+// --- LÓGICA DEL VISOR REESTRUCTURADA ---
 
 function crearEstructuraLightbox() {
     const lightbox = document.createElement('div');
@@ -137,11 +137,15 @@ function crearEstructuraLightbox() {
     lightbox.innerHTML = `
         <div class="lightbox-content">
             <button class="lightbox-btn close-btn"><i class="fas fa-times"></i></button>
-            <button class="lightbox-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+            
             <img class="lightbox-img" src="" alt="Gallery Image" draggable="false">
-            <button class="lightbox-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            
             <div class="lightbox-controls-bottom">
-                <button class="play-pause-btn" id="play-btn"><i class="fas fa-play"></i></button>
+                <div class="controls-row">
+                    <button class="lightbox-btn inline-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="play-pause-btn" id="play-btn"><i class="fas fa-play"></i></button>
+                    <button class="lightbox-btn inline-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
                 <div class="image-counter" id="counter">00 / 00</div>
             </div>
         </div>
@@ -152,10 +156,10 @@ function crearEstructuraLightbox() {
     let startX = 0, startY = 0;
     let isDragging = false;
 
-    // --- LÓGICA DE CIERRE Y BOTONES ---
     lightbox.onclick = (e) => {
         if (e.target === lightbox || e.target.classList.contains('lightbox-content')) closeLightbox();
     };
+
     lightbox.querySelector('.close-btn').onclick = closeLightbox;
     lightbox.querySelector('.next-btn').onclick = (e) => { e.stopPropagation(); stopSlideshow(); nextImg(); };
     lightbox.querySelector('.prev-btn').onclick = (e) => { e.stopPropagation(); stopSlideshow(); prevImg(); };
@@ -169,7 +173,6 @@ function crearEstructuraLightbox() {
         if (e.key === " ") { e.preventDefault(); toggleSlideshow(); }
     });
 
-    // --- TRACKING UNIFICADO (TACTIL Y RATÓN) ---
     const startAction = (e) => {
         startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
         startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
@@ -185,13 +188,11 @@ function crearEstructuraLightbox() {
         const diffY = currentY - startY;
 
         if (Math.abs(diffY) > Math.abs(diffX)) {
-            // Arrastre Vertical (Descarte)
             const opacity = 1 - Math.abs(diffY) / 600;
             const scale = 1 - Math.abs(diffY) / 2000;
-            lbImg.style.transform = `translate(${diffX}px, ${diffY}px) scale(${scale})`;
+            lbImg.style.transform = `translate(${diffX * 0.3}px, ${diffY}px) scale(${scale})`;
             lightbox.style.backgroundColor = `rgba(0, 0, 0, ${0.7 * opacity})`;
         } else {
-            // Arrastre Horizontal (Navegación)
             lbImg.style.transform = `translateX(${diffX}px)`;
         }
     };
@@ -208,27 +209,22 @@ function crearEstructuraLightbox() {
         lbImg.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease';
 
         if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > threshold) {
-            // CERRAR
             lbImg.style.transform = `translateY(${diffY > 0 ? '100%' : '-100%'})`;
             lbImg.style.opacity = '0';
             setTimeout(closeLightbox, 300);
         } else if (Math.abs(diffX) > threshold) {
-            // NAVEGAR
             stopSlideshow();
             diffX > 0 ? prevImg() : nextImg();
         } else {
-            // RESET (Vuelve al centro)
             lbImg.style.transform = 'translate(0, 0) scale(1)';
             lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
         }
     };
 
-    // Eventos Táctiles
     lightbox.addEventListener('touchstart', startAction, { passive: true });
     lightbox.addEventListener('touchmove', moveAction, { passive: false });
     lightbox.addEventListener('touchend', endAction, { passive: true });
 
-    // Eventos Ratón
     lbImg.addEventListener('mousedown', startAction);
     window.addEventListener('mousemove', moveAction);
     window.addEventListener('mouseup', endAction);
@@ -240,30 +236,37 @@ function updateLightbox(direction = 'none') {
     const lightbox = document.getElementById('lightbox-visor');
     if (!lbImg || galleryImages.length === 0) return;
 
-    // Resetear estilos de tracking
-    lbImg.style.opacity = '1';
-    lbImg.style.transform = 'translate(0, 0) scale(1)';
-    lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-
     if (direction === 'none') {
+        lbImg.style.transition = 'none';
         lbImg.src = galleryImages[currentIndex];
+        lbImg.style.opacity = '1';
+        lbImg.style.transform = 'translate(0, 0) scale(1)';
     } else {
         const outClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
         const inClass = direction === 'next' ? 'slide-in-right' : 'slide-in-left';
 
+        // 1. Iniciar barrido de salida
         lbImg.classList.add(outClass);
+
+        // 2. Esperar a que la imagen salga antes de cambiar el src
         setTimeout(() => {
             lbImg.classList.remove(outClass);
+            lbImg.style.transition = 'none'; // Quitar transición para posicionar la nueva imagen
             lbImg.src = galleryImages[currentIndex];
-            lbImg.style.transition = 'none';
+            
+            // 3. Posicionar la nueva imagen (invisible) para la entrada
             lbImg.classList.add(inClass);
+            
+            // Forzar reflow para que el navegador registre la nueva posición
             void lbImg.offsetWidth;
-            lbImg.style.transition = ''; 
-            requestAnimationFrame(() => {
-                lbImg.classList.remove(inClass);
-            });
-        }, 450);
+            
+            // 4. Ejecutar barrido de entrada
+            lbImg.style.transition = 'transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease';
+            lbImg.classList.remove(inClass);
+            
+        }, 450); // Tiempo coordinado con el CSS
     }
+    
     lbCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(galleryImages.length).padStart(2, '0')}`;
 }
 
@@ -320,8 +323,6 @@ function stopSlideshow() {
         }
     }
 }
-
-// --- RESTO DE FUNCIONES (INTERCAMBIO Y COPIADO) ---
 
 function configurarIntercambioSecciones() {
     const btnNosotros = document.querySelector('[href="#nosotros"]');
