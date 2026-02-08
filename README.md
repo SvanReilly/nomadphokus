@@ -21,10 +21,9 @@ Debes navegar hasta la siguiente carpeta:
 La web está programada para buscar imágenes con un nombre secuencial. **No uses nombres personalizados** (como "montaña.jpg" o "castillo.png"). 
 
 Renombra tus fotos antes de subirlas siguiendo este patrón:
-* `image0` (Esta será la primera foto que aparezca).
-* `image1`
-* `image2`
-* `image3` ... y así sucesivamente.
+* `image-1` (Esta será la primera foto que aparezca).
+* `image-2`
+* `image-3` ... y así sucesivamente.
 
 
 ---
@@ -32,24 +31,24 @@ Renombra tus fotos antes de subirlas siguiendo este patrón:
 ## 🛠️ Preguntas Frecuentes (FAQ)
 
 #### Pero no entiendo, Svån,¿Entonces en qué formato debo subir las fotos?
-Puedes subirlas en **JPG, PNG o WebP**. La web las convertirá automáticamente al formato más ligero para que carguen rápido en móviles sin perder calidad.
+Puedes subirlas en **AVIF (recomendado), WEBP, JPG, JPEG o PNG**. En caso de subirlas en formato AVIF, exportar desde Lightroom con calidad al 70, y redimensionando con borde largo a 2000px a 72ppp.
 
 #### ¿Tengo que tocar el código de GitHub?
-**No.** Una vez que subas la foto a Cloudinary con el nombre correcto (ej. `image4`), la web la detectará y la publicará automáticamente en la posición de la celda correspondiente la próxima vez que alguien entre.
+**No.** Una vez que subas la foto a Cloudinary con el nombre correcto (ej. `image-4`), la web la detectará y la publicará automáticamente en la posición de la celda correspondiente la próxima vez que alguien entre.
 
 #### ¿Hay un límite de fotos?
 El sistema está configurado para buscar hasta **100 imágenes**. 
 
 #### He subido una foto pero no aparece, ¿qué hago?
 1. Verifica que el nombre sea exactamente `image` seguido del número (sin espacios).
-2. Asegúrate de que no te has saltado ningún número (si tienes `image0` e `image2`, pero falta `image1`, el sistema se detendrá en la primera).
+2. Asegúrate de que no te has saltado ningún número (si tienes `image1` e `image3`, pero falta `image2`, el sistema se detendrá en la primera).
 3. Refresca la página de la web.
-4. A veces puede tardar un buen rato en actualizarse, dependiendo de factores que de forma resumida escapan al alcance del programa web, pero terminarán viéndose reflejados dichos cambios.
+4. A veces puede tardar un buen rato en actualizarse, dependiendo de factores que, de forma resumida, escapan al alcance del programa web, pero terminarán viéndose reflejados dichos cambios si has seguido el paso a paso.
 
 ---
 
 ## 📬 Contacto Técnico
-Si el sistema deja de cargar fotos o quieres cambiar la ruta de las carpetas, contacta con el administrador del código (**Svån**) a través de los distintos enlaces de contacto presentes en el perfil.
+Si el sistema deja de cargar fotos o quieres cambiar la ruta de las carpetas, contacta con el administrador del código (**Svån**) con tu editor de código de confianza a través de los distintos enlaces de contacto presentes en el perfil.
 
 ---
 *Mantenlo simple. Enfoca tu pensamiento. Captura el momento.*
