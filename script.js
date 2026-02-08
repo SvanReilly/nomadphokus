@@ -201,9 +201,9 @@ function crearEstructuraLightbox() {
         
         const diffX = endX - startX;
         const diffY = endY - startY;
-        const threshold = 80;
+        const threshold = 70;
 
-        lbImg.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease';
+        lbImg.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease';
 
         if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > threshold) {
             lbImg.style.transform = `translateY(${diffY > 0 ? '100%' : '-100%'})`;
@@ -211,9 +211,16 @@ function crearEstructuraLightbox() {
             setTimeout(closeLightbox, 300);
         } else if (Math.abs(diffX) > threshold) {
             stopSlideshow();
-            diffX > 0 ? prevImg() : nextImg();
+            lbImg.style.opacity = '0';
+            lbImg.style.transform = `translateX(${diffX > 0 ? '100%' : '-100%'})`;
+            
+            setTimeout(() => {
+                // Si diffX > 0 es "anterior", si diffX < 0 es "siguiente"
+                diffX > 0 ? prevImg() : nextImg();
+            }, 400);
         } else {
             lbImg.style.transform = 'translate(0, 0) scale(1)';
+            lbImg.style.opacity = '1';
             lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
         }
     };
@@ -230,38 +237,43 @@ function crearEstructuraLightbox() {
 function updateLightbox(direction = 'none') {
     const lbImg = document.querySelector('.lightbox-img');
     const lbCounter = document.getElementById('counter');
-    const lightbox = document.getElementById('lightbox-visor');
     if (!lbImg || galleryImages.length === 0) return;
 
-    // LIMPIEZA CRÍTICA: Reseteamos cualquier transform residual del gesto táctil
-    lbImg.style.transform = 'none';
-
-    if (direction === 'none') {
-        lbImg.style.transition = 'none';
-        lbImg.src = galleryImages[currentIndex];
-        lbImg.style.opacity = '1';
-        lbImg.style.transform = 'translate(0, 0) scale(1)';
+    if (direction !== 'none' && lbImg.style.opacity !== '0') {
+        lbImg.style.transition = 'transform 0.4s ease-in, opacity 0.3s ease-in';
+        lbImg.style.transform = `translateX(${direction === 'next' ? '-100%' : '100%'})`;
+        lbImg.style.opacity = '0';
+        
+        setTimeout(() => ejecutarCambioImagen(lbImg, lbCounter, direction), 400);
     } else {
-        const outClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
-        const inClass = direction === 'next' ? 'slide-in-right' : 'slide-in-left';
-
-        lbImg.classList.add(outClass);
-
-        setTimeout(() => {
-            lbImg.classList.remove(outClass);
-            lbImg.style.transition = 'none';
-            lbImg.style.transform = 'none'; // Re-aseguramos limpieza antes de la entrada
-            lbImg.src = galleryImages[currentIndex];
-            
-            lbImg.classList.add(inClass);
-            void lbImg.offsetWidth;
-            
-            lbImg.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease';
-            lbImg.classList.remove(inClass);
-        }, 450);
+        ejecutarCambioImagen(lbImg, lbCounter, direction);
     }
-    
-    lbCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(galleryImages.length).padStart(2, '0')}`;
+}
+
+function ejecutarCambioImagen(lbImg, lbCounter, direction) {
+    const tempImg = new Image();
+    tempImg.src = galleryImages[currentIndex];
+
+    tempImg.onload = () => {
+        lbImg.style.transition = 'none';
+        
+        // POSICIONAMIENTO INICIAL: La ponemos fuera de pantalla antes de mostrarla
+        if (direction === 'next') lbImg.style.transform = 'translateX(100%)';
+        else if (direction === 'prev') lbImg.style.transform = 'translateX(-100%)';
+        else lbImg.style.transform = 'translateX(0)';
+
+        lbImg.src = galleryImages[currentIndex];
+
+        // Forzar reflow para que el navegador registre la posición fuera de pantalla
+        void lbImg.offsetWidth;
+
+        // ANIMACIÓN DE ENTRADA: Al centro con inercia cinemática
+        lbImg.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease-out';
+        lbImg.style.transform = 'translateX(0)';
+        lbImg.style.opacity = '1';
+        
+        lbCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(galleryImages.length).padStart(2, '0')}`;
+    };
 }
 
 function openLightbox(index) {
