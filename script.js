@@ -30,7 +30,6 @@ const translations = {
 };
 
 const FOLDER = ""; 
-// El script buscará en este orden de prioridad
 const FORMATS = ['avif', 'webp', 'jpg', 'jpeg', 'png']; 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -73,7 +72,7 @@ async function inicializarGaleria(cloudUser, displayName) {
     const grid = document.getElementById('grid-fotografico');
     if (nameSpan && displayName) nameSpan.innerText = displayName.toUpperCase();
 
-    let i = 1; // <--- CAMBIO: Ahora empezamos en 1 como Lightroom
+    let i = 1; 
     let buscando = true;
     const ts = new Date().getTime();
 
@@ -81,23 +80,27 @@ async function inicializarGaleria(cloudUser, displayName) {
         let imagenEncontrada = false;
 
         for (const ext of FORMATS) {
-            // CAMBIO: Añadimos el guion entre 'image' e '${i}'
             const imgURL = `https://res.cloudinary.com/${cloudUser}/image/upload/f_auto,q_auto,w_1200/${FOLDER}/image-${i}.${ext}?v=${ts}`;
             
             try {
                 const existe = await verificarExistencia(imgURL);
                 if (existe) {
+                    // --- CAMBIO: CREACIÓN DE ENLACE PARA IPHONE ---
+                    const linkElement = document.createElement('a');
+                    const fullRes = imgURL.replace('w_1200', 'q_auto').split('?')[0];
+                    linkElement.href = fullRes;
+                    linkElement.target = "_blank";
+                    linkElement.rel = "opener"; // <--- Crucial para el botón "atrás" en iOS
+                    linkElement.classList.add('grid-item-link');
+
                     const imgElement = document.createElement('img');
                     imgElement.src = imgURL;
                     imgElement.loading = "lazy";
                     imgElement.onload = () => imgElement.classList.add('reveal');
                     
-                    imgElement.onclick = () => {
-                        const fullRes = imgURL.replace('w_1200', 'q_auto').split('?')[0];
-                        window.open(fullRes, '_blank');
-                    };
+                    linkElement.appendChild(imgElement);
+                    grid.appendChild(linkElement);
 
-                    grid.appendChild(imgElement);
                     imagenEncontrada = true;
                     i++; 
                     break; 
