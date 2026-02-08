@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nomad Phokus | Colectivo Fotográfico</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="assets/NPlogo512.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/NPlogo180.png">
+</head>
+
+<body class="welcome-body">
+
+    <div class="language-picker">
+        <select id="lang-select">
+            <option value="es">ES</option>
+            <option value="en">EN</option>
+        </select>
+    </div>
+
+    <main class="welcome-container">
+        <h1 data-key="welcome">Nomad Phokus</h1>
+
+        <div class="button-group">
+            <a href="portfolio.html?user=USUARIO_PHOKUS&name=Phokus" class="btn" data-key="phokusBtn">PHOKUS
+                Portfolio</a>
+            <a href="portfolio.html?user=dy6l4zdj4&name=Svån" class="btn" data-key="svanBtn">Svån Portfolio</a>
+        </div>
+
+        <section class="info-shortcuts">
+            <a href="#nosotros" data-key="aboutBtn">Quiénes somos</a>
+            <a href="#contacto" data-key="contactBtn">Contacto</a>
+        </section>
+    </main>
+
+    <div id="content-display">
+        <section id="nosotros" class="content-section hidden">
+            <h2 data-key="aboutTitle">Quiénes somos</h2>
+            <p data-key="aboutText">Un colectivo visual dedicado a capturar la esencia de lo efímero a través de la
+                fotografía nómada.</p>
+        </section>
+
+        <footer id="contacto" class="content-section hidden">
+            <h2 data-key="contactTitle">Contacto</h2>
+            <div class="contact-links">
+                <div class="contact-item">
+                    <p>Phokus</p>
+                    <a href="https://www.instagram.com/se.ma.gar/" target="_blank" class="insta-link">
+                        <i class="fab fa-instagram"></i> se.ma.gar
+                    </a>
+                </div>
+
+                <div class="contact-item">
+                    <p>Svån</p>
+                    <a href="https://www.instagram.com/svanreilly/" target="_blank" class="insta-link">
+                        <i class="fab fa-instagram"></i> svanreilly
+                    </a>
+                </div>
+
+                <div class="contact-item email-row">
+                    <p data-key="mailLabel">Email</p>
+                    <a href="mailto:nomadphokus@gmail.com" class="insta-link copy-trigger" id="email-copy">
+                        <i class="far fa-envelope"></i>
+                        <span id="email-text">nomadphokus@gmail.com</span>
+                        <span class="tooltip" id="copy-tooltip">Copiado / Copied</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
