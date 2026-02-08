@@ -50,20 +50,20 @@ El sistema está configurado para buscar hasta **100 imágenes**.
 2. Seleccionar la foto y darle dos toques/clics dependiendo del dispositivo que uses para Cloudinary.
 
 <p align="center";>
-    <img src="assets/cambiarfoto1.jpeg" alt="scr1" width="700">
+    <img src="assets/cambiarfoto1.jpeg" alt="scr1" width="300">
 </p>
 
 
 3. Seleccionar "Resumen".
 
 <p align="center";>
-    <img src="assets/cambiarfoto2.jpeg" alt="scr1" width="700">
+    <img src="assets/cambiarfoto2.jpeg" alt="scr1" width="300">
 </p>
 
 4. Cambiar el id público al número que quieras cambiar, por ejemplo: cambiar la posición de la foto 75 por la de la foto 12, como no es posible dar el mismo Public ID a dos elementos tendrás que poner uno aleatorio para poder cambiar el otro al Public ID sustituido. Para ver los cambios simplemente borra la caché de tu navegador y al cabo de unos minutos se verán reflejados los cambios.
 
 <p align="center";>
-    <img src="assets/cambiarfoto3.jpeg" alt="scr1" width="700">
+    <img src="assets/cambiarfoto3.jpeg" alt="scr1" width="300">
 </p>
 
 
