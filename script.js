@@ -11,7 +11,7 @@ const translations = {
         aboutBtn: "Visión",
         contactBtn: "Contacto",
         aboutTitle: "Visión",
-        aboutText: "Exploramos el límite entre lo cotidiano y lo extraordinario centrándonos en la identificación de momentos clave y, en ocasiones, reinterpretando elementos ordinarios que oscilan entre el registro documental y nuestra faceta más exótica con la finalidad de mostrar una narrativa visual fuera del sedentarismo creativo.",
+        aboutText: "Exploramos el límite entre lo cotidiano y lo sutil centrándonos en la identificación de momentos clave y, en ocasiones, reinterpretamos elementos ordinarios que oscilan entre el registro documental y nuestra faceta más exótica con la finalidad de mostrar una narrativa visual fuera del sedentarismo creativo.",
         contactTitle: "Contacto",
         backBtn: "Volver",
         mailLabel: "Email"
@@ -24,7 +24,7 @@ const translations = {
         aboutBtn: "Vision",
         contactBtn: "Contact",
         aboutTitle: "Vision",
-        aboutText: "We explore the boundary between the everyday and the extraordinary by focusing on the identification of key moments. At times, we reinterpret ordinary elements that range from documentary recording to our more exotic facets, aiming to present a visual storytelling that defies creative sedentarity.",
+        aboutText: "We explore the boundary between the everyday and the subtle by focusing on the identification of key moments. At times, we reinterpret ordinary elements that range from documentary recording to our more exotic facets, aiming to present a visual storytelling that defies creative sedentarity.",
         contactTitle: "Contact",
         backBtn: "Back",
         mailLabel: "Email"
